@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
       return [
         {
           source: "/v1/:path*", 
-          destination: "http://localhost:8080/v1/:path*",
+          destination: "http://okg8oc4wc80k8o84c0swc8gg.31.97.165.242.sslip.io/v1/:path*",
         },
       ];
     }
