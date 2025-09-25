@@ -15,13 +15,9 @@ import { cn } from "@/lib/utils";
 
 interface TransactionsListProps {
   transactions: Transaction[];
-  size?: string;
 }
 
-export function TransactionsList({
-  transactions,
-  size = "md",
-}: TransactionsListProps) {
+export function TransactionsList({ transactions }: TransactionsListProps) {
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("pt-BR", {
       style: "currency",
@@ -60,12 +56,10 @@ export function TransactionsList({
                   <Badge
                     variant="secondary"
                     className={cn(
-                      "font-medium border-0",
-                      transaction?.category?.color,
-                      size === "sm"
-                        ? "text-xs px-2 py-0.5"
-                        : "text-sm px-2.5 py-1"
+                      "font-medium border-0 text-xs px-2 py-0.5 md:text-sm md:px-2.5 md:py-1"
                     )}
+                    color={transaction?.category?.color}
+                    style={{ backgroundColor: transaction?.category?.color }}
                   >
                     {transaction.category?.name}
                   </Badge>

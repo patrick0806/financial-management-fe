@@ -13,7 +13,7 @@ export default function Home() {
       <Header />
       <div className="mt-5 px-5 w-full">
         {!isLoading && (
-          <div className="flex flex-row gap-5 justify-around">
+          <div className="flex md:flex-row flex-col gap-5 justify-around">
             <ExpenseChart
               expenses={
                 transactions?.filter(
