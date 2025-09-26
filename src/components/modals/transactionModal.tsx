@@ -285,10 +285,7 @@ export function TransactionModal({
                             mode="single"
                             selected={field.value}
                             onSelect={field.onChange}
-                            disabled={(date) =>
-                              date > new Date() || date < new Date("1900-01-01")
-                            }
-                            initialFocus
+                            disabled={(date) => date < new Date("2025-09-01")}
                           />
                         </PopoverContent>
                       </Popover>

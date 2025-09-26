@@ -45,7 +45,9 @@ export function useCreateTransaction() {
 export function useDeleteTransaction(){
     const queryClient = useQueryClient()
     return useMutation({
-      mutationFn: ({transactionId, deleteRecurring, deleteInstallments }:{transactionId: string, deleteRecurring: boolean , deleteInstallments: boolean}) => deleteTransaction(transactionId, deleteRecurring, deleteInstallments),
+      mutationFn: ({transactionId, deleteRecurring, deleteInstallments }:{transactionId: string, deleteRecurring: boolean , deleteInstallments: boolean}) => {
+        return deleteTransaction(transactionId, deleteRecurring, deleteInstallments);
+      },
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["transactions"] })
       },

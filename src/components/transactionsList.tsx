@@ -103,7 +103,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
                           deleteTransaction.mutateAsync({
                             transactionId: transaction.id,
                             deleteInstallments: transaction.installments !== 0,
-                            deleteRecurring: transaction.isRecurring,
+                            deleteRecurring: transaction.isRecurring || false,
                           })
                         }
                         className="text-destructive"
