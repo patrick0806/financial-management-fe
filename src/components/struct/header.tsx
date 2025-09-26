@@ -36,42 +36,15 @@ export function Header() {
         </h1>
       </div>
 
-      {/* Right side */}
       <div className="flex items-center gap-2">
-        {/* Desktop Actions */}
-        <div className="hidden md:flex items-center gap-2">
-          <Button
-            size="sm"
-            onClick={() => {
-              setIsModalOpen(true);
-              setDefaultType(TransactionType.INCOME);
-            }}
-            className="bg-green-600 hover:bg-green-700 text-white"
-          >
-            <TrendingUp className="h-4 w-4 mr-2" />
-            Receita
-          </Button>
-          <Button
-            size="sm"
-            variant="destructive"
-            onClick={() => {
-              setIsModalOpen(true);
-              setDefaultType(TransactionType.EXPENSE);
-            }}
-          >
-            <TrendingDown className="h-4 w-4 mr-2" />
-            Despesa
-          </Button>
-        </div>
-
-        <div className="flex md:hidden items-center gap-2">
+        <div className="flex items-center gap-2">
           <Button
             size="sm"
             onClick={() => {
               setIsModalOpen(true);
               setDefaultType(TransactionType.EXPENSE);
             }}
-            className="bg-gray-600 hover:bg-gray-700 text-white"
+            className="bg-primary hover:bg-primary/25"
           >
             <Plus className="h-4 w-4 mr-2" />
             Transação

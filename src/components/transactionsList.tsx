@@ -12,12 +12,14 @@ import {
 import { Transaction, TransactionType } from "@/types/transaction";
 import { Badge } from "./ui/badge";
 import { cn } from "@/lib/utils";
+import { useDeleteTransaction } from "@/hooks/useTransactions";
 
 interface TransactionsListProps {
   transactions: Transaction[];
 }
 
 export function TransactionsList({ transactions }: TransactionsListProps) {
+  const deleteTransaction = useDeleteTransaction();
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("pt-BR", {
       style: "currency",
@@ -97,7 +99,11 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
                         Editar
                       </DropdownMenuItem>
                       <DropdownMenuItem
-                        onClick={() => {}}
+                        onClick={() =>
+                          deleteTransaction.mutateAsync({
+                            transactionId: transaction.id,
+                          })
+                        }
                         className="text-destructive"
                       >
                         <Trash2 className="h-4 w-4 mr-2" />

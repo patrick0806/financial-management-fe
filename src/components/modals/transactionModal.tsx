@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -70,12 +69,7 @@ const transactionSchema = z.object({
     .optional(),
 });
 
-const createTransactionSchema = transactionSchema.extend({
-  userId: z.string().min(1, "ID do usuário é obrigatório"),
-});
-
 type TransactionFormData = z.infer<typeof transactionSchema>;
-type CreateTransactionData = z.infer<typeof createTransactionSchema>;
 
 export function TransactionModal({
   isOpen,
@@ -86,7 +80,7 @@ export function TransactionModal({
   const [transactionType, setTransactionType] =
     useState<TransactionType>(defaultType);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { data: categories, isLoading: isLoadingCategories } = useCategories();
+  const { data: categories } = useCategories();
   const createTransaction = useCreateTransaction();
 
   const form = useForm<TransactionFormData>({
@@ -111,6 +105,7 @@ export function TransactionModal({
   };
 
   const onSubmit = async (data: TransactionFormData) => {
+    setIsSubmitting(true);
     try {
       if (!user) {
         toast.error("Usuário não logado");
@@ -135,6 +130,8 @@ export function TransactionModal({
     } catch (error) {
       console.log(error);
       toast.error("Erro ao criar transação.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 

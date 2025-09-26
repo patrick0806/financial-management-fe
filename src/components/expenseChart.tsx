@@ -13,7 +13,6 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from "recharts";
 
 export function ExpenseChart({ expenses }: { expenses: Transaction[] }) {
   const total = expenses.reduce((sum, expense) => sum + expense.value, 0);
-  console.log(total);
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("pt-BR", {
       style: "currency",
