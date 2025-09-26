@@ -1,6 +1,7 @@
 import { api } from "@/service/api"
 import { Transaction } from "@/types/transaction"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
+import { format } from "date-fns";
 
 type CreateTransactionInput = Omit<Transaction, "id" | "groupId">
 
@@ -21,9 +22,10 @@ async function deleteTransaction(transactionId: string, deleteRecurring: boolean
     await api.delete<void>(`/v1/transactions/${transactionId}?deleteRecurring=${deleteRecurring}&deleteInstallments=${deleteInstallments}`);
 }
 
-export function useTransactions(transactionDate: Date) {
+export function useTransactions(transactionDate: Date, queryKey?: string) {
+  const dateKey = queryKey || format(transactionDate, 'yyyy-MM');
   return useQuery<Transaction[], Error>({
-    queryKey: ["transactions"],
+    queryKey: ["transactions", dateKey],
     queryFn: () => fetchTransactions(transactionDate),
     staleTime: 1000 * 60 * 2, // 2 min de cache
   })
@@ -36,7 +38,7 @@ export function useCreateTransaction() {
     mutationFn: (input: CreateTransactionInput) => createTransaction(input),
     onSuccess: () => {
       // Recarrega transações do cache
-      queryClient.invalidateQueries({ queryKey: ["transactions"] })
+      queryClient.invalidateQueries({ queryKey: ["transactions"], exact: false })
     },
   })
 }
@@ -49,7 +51,7 @@ export function useDeleteTransaction(){
         return deleteTransaction(transactionId, deleteRecurring, deleteInstallments);
       },
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["transactions"] })
+        queryClient.invalidateQueries({ queryKey: ["transactions"], exact: false })
       },
     })
 }
