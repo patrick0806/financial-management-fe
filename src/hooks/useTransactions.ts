@@ -17,8 +17,8 @@ async function createTransaction(
   return data
 }
 
-async function deleteTransaction(transactionId: string){
-    await api.delete<void>(`/v1/transactions/${transactionId}`);
+async function deleteTransaction(transactionId: string, deleteRecurring: boolean = false, deleteInstallments: boolean = false){
+    await api.delete<void>(`/v1/transactions/${transactionId}?deleteRecurring=${deleteRecurring}&deleteInstallments=${deleteInstallments}`);
 }
 
 export function useTransactions(transactionDate: Date) {
@@ -45,7 +45,7 @@ export function useCreateTransaction() {
 export function useDeleteTransaction(){
     const queryClient = useQueryClient()
     return useMutation({
-      mutationFn: ({transactionId}:{transactionId: string}) => deleteTransaction(transactionId),
+      mutationFn: ({transactionId, deleteRecurring, deleteInstallments }:{transactionId: string, deleteRecurring: boolean , deleteInstallments: boolean}) => deleteTransaction(transactionId, deleteRecurring, deleteInstallments),
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["transactions"] })
       },

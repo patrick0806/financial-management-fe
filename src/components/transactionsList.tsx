@@ -102,6 +102,8 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
                         onClick={() =>
                           deleteTransaction.mutateAsync({
                             transactionId: transaction.id,
+                            deleteInstallments: transaction.installments !== 0,
+                            deleteRecurring: transaction.isRecurring,
                           })
                         }
                         className="text-destructive"
