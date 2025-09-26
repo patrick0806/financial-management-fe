@@ -34,13 +34,13 @@ export default function RootLayout({
           <AuthProvider>
             {children}
             <Toaster
-              position="top-right"
+              position="bottom-right"
               richColors
               closeButton
               toastOptions={{
                 duration: 3000,
                 style: {
-                  background: "hsl(var(--card))",
+                  background: "hsl(var(--background))",
                   color: "hsl(var(--card-foreground))",
                   border: "1px solid hsl(var(--border))",
                 },

@@ -31,11 +31,23 @@ export function ExpenseChart({ expenses }: { expenses: Transaction[] }) {
     }),
     {}
   );
-  const pieData = expenses.map((expense) => ({
-    name: expense.category?.name || expense.description,
-    value: expense.value,
-    color: expense.category?.color || "#8884d8", // fallback
-  }));
+
+  const pieData = Object.values(
+    expenses.reduce((acc, expense) => {
+      const key = expense.category?.id || expense.category?.name || "Outros";
+
+      if (!acc[key]) {
+        acc[key] = {
+          name: expense.category?.name || expense.description,
+          value: 0,
+          color: expense.category?.color || "#8884d8", // fallback
+        };
+      }
+
+      acc[key].value += expense.value;
+      return acc;
+    }, {} as Record<string, { name: string; value: number; color: string }>)
+  );
 
   return (
     <Card className="shadow-lg border-0 bg-gradient-to-br from-card to-card/80">

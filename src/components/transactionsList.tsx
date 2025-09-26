@@ -9,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Transaction } from "@/types/transaction";
+import { Transaction, TransactionType } from "@/types/transaction";
 import { Badge } from "./ui/badge";
 import { cn } from "@/lib/utils";
 
@@ -39,7 +39,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
         <CardTitle>Lista de Transações ({transactions.length})</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="space-y-3">
+        <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
           {transactions.length === 0 ? (
             <div className="text-center py-8">
               <p className="text-muted-foreground">
@@ -75,12 +75,12 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
                   <div className="text-right">
                     <p
                       className={`font-semibold ${
-                        transaction.type === "income"
+                        transaction.type === TransactionType.INCOME
                           ? "text-green-600"
                           : "text-red-600"
                       }`}
                     >
-                      {transaction.type === "income" ? "+" : "-"}
+                      {transaction.type === TransactionType.INCOME ? "+" : "-"}
                       {formatCurrency(transaction.value)}
                     </p>
                   </div>
